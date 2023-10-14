@@ -1,18 +1,17 @@
 {
-  "name": "hello_node",
+  "name": "area_f",
   "version": "1.0.0",
-  "description": "Hello Node.js",
+  "description": "projeto academico",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "keywords": [
-    "Hello"
+    "academico"
   ],
-  "author": "Renato Lenz Costalima",
+  "author": "Thiago Cadore Vale",
   "license": "Apache-2.0",
   "dependencies": {
-  },
-  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
