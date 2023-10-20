@@ -71,12 +71,11 @@ const server = http.createServer((req, res) => {
             res.write(`<h2>Olá, ${nome}! Seu decágono tem ${lado} metros de lado. A  área dele é ${areaDecagono} metros quadrados</h2>`)
             if (areaDecagono >= 10 && areaDecagono <=20){
                 res.write('<p>A área é média')
-                res.write('</body>')
             }
             else {
                 res.write('<p>A área não segue o padrão')
-                res.write('</body>')
             }
+            res.write('</body>')
             res.end();
         })
     }
