@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area</title>
+</head>
+<body>
+    <%- include('/home/node/app/views/cabecalho.ejs') %>
+    <h1>Área de uma forma de decágono</h1>
+    <p>Se a área estiver dentro do intervalo de 10 a 20 metros quadrados, é uma área média. Caso contrário, é uma área que não segue o padrão</p>
+    <p>Podemos calcular a área do decágono em função da medida dos lados.</p>
+    <p>Área = (5/4)*lado^2*(1/tan(PI/10))</p>
+    <p>Olá, <%= nome %>. Seu decágono tem <%= lado %> metros de lado. A  área dele é <%= area() %> metros quadrados.</p>
+</body>
+</html>        

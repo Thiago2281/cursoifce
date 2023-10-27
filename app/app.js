@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
         estaticoController.naoEncontrado(req, res);   
     }
 });
- 
+
 server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
