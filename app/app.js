@@ -5,7 +5,7 @@ const AutorController = require('./controllers/AutorController');
 const PoligonosDao = require('./lib/projeto/PoligonosDao');
 
 let poligonosDao = new PoligonosDao();
-let poligonosController = new PoligonosController(poligonosDAO);
+let poligonosController = new PoligonosController(poligonosDao);
 let estaticoController = new EstaticoController();
 let autorController = new AutorController();
 

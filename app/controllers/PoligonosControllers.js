@@ -1,4 +1,4 @@
-const Poligono = require('./../lib/projeto/Poligonos/poligono');
+const Poligono = require('./../lib/projeto/poligono');
 const utils = require('../lib/utils');
 
 class PoligonosController {
@@ -22,7 +22,7 @@ class PoligonosController {
             }
             let poligono = new Poligono();
             poligono.nome = query.nome;
-            poligono.lado = parseFloat(query.lado_decagono);
+            poligono.lado = parseFloat(query.lado);
                        
             utils.renderizarEjs(res, './views/area.ejs', poligono);
         })
@@ -30,25 +30,14 @@ class PoligonosController {
 
     listar(req, res) {
         let poligonos = this.poligonosDao.listar();
-        /**/
-        // Alternativa com map()
+
         let dados = poligonos.map(poligono => {
             return {
                 ...poligono,
                 area: poligono.area(),
             };
         })
-        /*/
-        // Alternativa com for
-        let dados = [];
-        for (let poligono of poligonos) {
-            dados.push({
-                ...poligono,
-                area: poligono.area(),
-                estaAprovado: poligono.estaAprovado()
-            });
-        }
-        /**/
+
         utils.renderizarJSON(res, dados);
     }
     

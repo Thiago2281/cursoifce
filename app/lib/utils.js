@@ -1,7 +1,7 @@
 const fs = require('fs');
 const ejs = require('ejs');
 
-const utils ={
+const utils = {
     decoficarUrl: function (url) {
         let propriedades = url.split('&');
         let query = {};
@@ -19,7 +19,7 @@ const utils ={
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(html);
         res.end();
-    }
+    },
     renderizarJSON: function (res, dados, status=200) {
         res.writeHead(status, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(dados));

@@ -1,4 +1,4 @@
-const Poligono = require("./Poligono")
+const Poligono = require("./poligono")
 
 class PoligonosDao {
     constructor() {
