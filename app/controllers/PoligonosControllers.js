@@ -1,7 +1,7 @@
-const Usuario = require('./../lib/projeto/Usuarios/usuario');
+const Poligono = require('./../lib/projeto/Poligonos/poligono');
 const utils = require('../lib/utils');
 
-class UsuariosController {
+class PoligonosController {
     index(req, res) {
         utils.renderizarEjs(res, './views/index.ejs');      
     }
@@ -17,13 +17,13 @@ class UsuariosController {
                 let [variavel, valor] = propriedade.split('=');
                 query[variavel] = valor;
             }
-            let usuario = new Usuario();
-            usuario.nome = query.nome;
-            usuario.lado = parseFloat(query.lado_decagono);
+            let poligono = new Poligono();
+            poligono.nome = query.nome;
+            poligono.lado = parseFloat(query.lado_decagono);
                        
-            utils.renderizarEjs(res, './views/area.ejs', usuario);
+            utils.renderizarEjs(res, './views/area.ejs', poligono);
         })
     }
 }
 
-module.exports = UsuariosController;
+module.exports = PoligonosController;

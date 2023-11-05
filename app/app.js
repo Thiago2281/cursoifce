@@ -1,9 +1,9 @@
 const http = require('http');
-const UsuariosController = require('./controllers/UsuariosControllers');
+const PoligonosController = require('./controllers/PoligonosControllers');
 const EstaticoController = require('./controllers/EstaticoController');
 const AutorController = require('./controllers/AutorController');
 
-let usuariosController = new UsuariosController();
+let poligonosController = new PoligonosController();
 let estaticoController = new EstaticoController();
 let autorController = new AutorController();
 
@@ -14,10 +14,10 @@ const server = http.createServer((req, res) => {
     let metodo = req.method;
 
     if (url=='/index') {
-        usuariosController.index(req, res);
+        poligonosController.index(req, res);
     }
     else if (url=='/area') {
-        usuariosController.area(req, res);
+        poligonosController.area(req, res);
     }
     else if (url=='/autor') {
         autorController.autor(req, res);    
