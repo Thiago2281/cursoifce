@@ -93,11 +93,12 @@ class PoligonosController {
         let corpo = await utils.getCorpo(req);
         let poligono = new Poligono(
             corpo.nome,
-            parseFloat(corpo.lado)
+            parseFloat(corpo.lado),
+            corpo.senha,
+            corpo.papel
         );
         return poligono;
     }
-
 }
 
 module.exports = PoligonosController;
