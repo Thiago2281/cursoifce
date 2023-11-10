@@ -15,7 +15,7 @@ class AuthController {
         let corpo = await utils.getCorpo(req);
         let usuario = this.poligonosDao.autenticar(corpo.nome, corpo.senha);
         if (usuario) {
-            console.log({usuario});
+            console.log({usuario});          
             let token = jwt.sign({
                 ...usuario
             }, this.SEGREDO_JWT);
@@ -34,7 +34,9 @@ class AuthController {
     // middleware
     autorizar(req, res, proximoControlador, papeisPermitidos) {
         console.log('autorizando', req.headers);
-        let token = req.headers.authorization.split(' ')[1];
+        let token = req.headers.authorization.split(' ')[0];
+        console.log(token);
+        console.log(this.SEGREDO_JWT);
         try {
             let usuario = jwt.verify(token, this.SEGREDO_JWT);
             req.usuario = usuario;

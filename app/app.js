@@ -4,6 +4,7 @@ const EstaticoController = require('./controllers/EstaticoController');
 const AutorController = require('./controllers/AutorController');
 const AuthController = require('./controllers/AuthController');
 const PoligonosDao = require('./lib/projeto/PoligonosDao');
+require("dotenv").config();
 
 let poligonosDao = new PoligonosDao();
 let poligonosController = new PoligonosController(poligonosDao);
