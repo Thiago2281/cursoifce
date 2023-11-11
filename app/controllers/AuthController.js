@@ -2,8 +2,8 @@ const utils = require("../lib/utils");
 const jwt = require('jsonwebtoken');
 
 class AuthController {
-    constructor(poligonosDao) {
-        this.poligonosDao = poligonosDao;
+    constructor(usuariosDao) {
+        this.usuariosDao = usuariosDao;
         this.SEGREDO_JWT = process.env.SEGREDO_JWT;
     }
 
@@ -13,7 +13,9 @@ class AuthController {
 
     async logar(req, res) {
         let corpo = await utils.getCorpo(req);
-        let usuario = this.poligonosDao.autenticar(corpo.nome, corpo.senha);
+        console.log({corpo});
+        let usuario = this.usuariosDao.autenticar(corpo.nome, corpo.senha);
+        console.log({usuario});
         if (usuario) {
             console.log({usuario});          
             let token = jwt.sign({

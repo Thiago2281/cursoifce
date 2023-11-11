@@ -4,13 +4,16 @@ const EstaticoController = require('./controllers/EstaticoController');
 const AutorController = require('./controllers/AutorController');
 const AuthController = require('./controllers/AuthController');
 const PoligonosDao = require('./lib/projeto/PoligonosDao');
-require("dotenv").config();
+const UsuariosController = require('./controllers/UsuariosControllers');
+const UsuariosDao = require('./lib/projeto/UsuariosDao');
 
 let poligonosDao = new PoligonosDao();
+let usuariosDao = new UsuariosDao();
 let poligonosController = new PoligonosController(poligonosDao);
 let estaticoController = new EstaticoController();
 let autorController = new AutorController();
-let authController = new AuthController(poligonosDao);
+let authController = new AuthController(usuariosDao);
+let usuariosController = new UsuariosController(usuariosDao);
 
 const PORT = 3000;
 const server = http.createServer((req, res) => {
@@ -27,10 +30,14 @@ const server = http.createServer((req, res) => {
     }
 
     else if (url == 'poligonos' && metodo == 'GET') {
-        poligonosController.listar(req, res);
+        authController.autorizar(req, res, function() {
+            poligonosController.listar(req, res);
+        }, ['admin', 'geral']);
     }
     else if (url == 'poligonos' && metodo == 'POST') {
-        poligonosController.inserir(req, res);
+        authController.autorizar(req, res, function() {
+            poligonosController.inserir(req, res);
+        }, ['admin', 'geral']);
     }
     else if (url == 'poligonos' && metodo == 'PUT') {
         authController.autorizar(req, res, function() {
@@ -40,6 +47,23 @@ const server = http.createServer((req, res) => {
     else if (url == 'poligonos' && metodo == 'DELETE') {
         authController.autorizar(req, res, function() {
             poligonosController.apagar(req, res);
+        }, ['admin']);
+    }
+
+    else if (url == 'usuarios' && metodo == 'GET') {
+        usuariosController.listar(req, res);
+    }
+    else if (url == 'usuarios' && metodo == 'POST') {
+        usuariosController.inserir(req, res);
+    }
+    else if (url == 'usuarios' && metodo == 'PUT') {
+        authController.autorizar(req, res, function() {
+            usuariosController.alterar(req, res);
+        }, ['admin', 'geral']);
+    }
+    else if (url == 'usuarios' && metodo == 'DELETE') {
+        authController.autorizar(req, res, function() {
+            usuariosController.apagar(req, res);
         }, ['admin']);
     }
 
