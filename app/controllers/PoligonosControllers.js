@@ -28,9 +28,8 @@ class PoligonosController {
         })
     }
 
-    listar(req, res) {
-        let poligonos = this.poligonosDao.listar();
-
+    async listar(req, res) {
+        let poligonos = await this.poligonosDao.listar();
         let dados = poligonos.map(poligono => {
             return {
                 ...poligono,
@@ -60,11 +59,14 @@ class PoligonosController {
     }
 
     async alterar(req, res) {
+        console.log('teste');
         let poligono = await this.getPoligonoDaRequisicao(req);
+        console.log(poligono);
         let [ url, queryString ] = req.url.split('?');
         let urlList = url.split('/');
         url = urlList[1];
         let id = urlList[2];
+        console.log(id);
         try {
             this.poligonosDao.alterar(id, poligono);
             utils.renderizarJSON(res, {
@@ -78,10 +80,13 @@ class PoligonosController {
     }
     
     apagar(req, res) {
+        console.log('teste');
         let [ url, queryString ] = req.url.split('?');
+        console.log(url);
         let urlList = url.split('/');
         url = urlList[1];
         let id = urlList[2];
+        console.log(id);
         this.poligonosDao.apagar(id);
         utils.renderizarJSON(res, {
             mensagem: 'mensagem_poligono_apagado',
@@ -94,7 +99,6 @@ class PoligonosController {
         let poligono = new Poligono(
             corpo.nome,
             parseFloat(corpo.lado),
-            corpo.senha,
             corpo.papel
         );
         return poligono;

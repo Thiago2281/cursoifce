@@ -2,7 +2,6 @@ class Poligono {
     constructor(nome, lado, senha, papel) {
         this.nome = nome;
         this.lado = lado;
-        this.papel = papel;
     }
     area(){
         const pi = Math.PI;

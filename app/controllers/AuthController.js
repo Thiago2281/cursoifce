@@ -14,7 +14,7 @@ class AuthController {
     async logar(req, res) {
         let corpo = await utils.getCorpo(req);
         console.log({corpo});
-        let usuario = this.usuariosDao.autenticar(corpo.nome, corpo.senha);
+        let usuario = await this.usuariosDao.autenticar(corpo.nome, corpo.senha);
         console.log({usuario});
         if (usuario) {
             console.log({usuario});          
@@ -43,8 +43,9 @@ class AuthController {
             let usuario = jwt.verify(token, this.SEGREDO_JWT);
             req.usuario = usuario;
             console.log({usuario}, papeisPermitidos);
+            console.log(usuario.papel);
 
-            if (papeisPermitidos.includes(usuario.papel) || papeisPermitidos.length == 0) {
+            if (papeisPermitidos.includes(usuario.papel)) {
                 proximoControlador();
             }
             else {

@@ -5,31 +5,9 @@ class UsuariosController {
     constructor(usuariosDao) {
         this.usuariosDao = usuariosDao;
     }
-   /* index(req, res) {
-        utils.renderizarEjs(res, './views/index.ejs');      
-    }
-    area(req, res){               
-        let corpoTexto ='';
-        req.on('data', function (pedaco) {
-            corpoTexto += pedaco;
-        });
-        req.on('end', () => {
-            let propriedades = corpoTexto.split('&');
-            let query = {};
-            for (let propriedade of propriedades) {
-                let [variavel, valor] = propriedade.split('=');
-                query[variavel] = valor;
-            }
-            let usuario = new Usuario();
-            usuario.nome = query.nome;
-            usuario.lado = parseFloat(query.lado);
-                       
-            utils.renderizarEjs(res, './views/area.ejs', usuario);
-        })
-    }*/
 
-    listar(req, res) {
-        let usuarios = this.usuariosDao.listar();
+    async listar(req, res) {
+        let usuarios = await this.usuariosDao.listar();
 
         let dados = usuarios.map(usuario => {
             return {
@@ -43,7 +21,7 @@ class UsuariosController {
     async inserir(req, res) {
         let usuario = await this.getUsuarioDaRequisicao(req);
         try {
-            this.usuariosDao.inserir(usuario);
+            usuario.id = await this.usuariosDao.inserir(usuario);
             utils.renderizarJSON(res, {
                 usuario: {
                     ...usuario

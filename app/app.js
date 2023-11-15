@@ -6,9 +6,20 @@ const AuthController = require('./controllers/AuthController');
 const PoligonosDao = require('./lib/projeto/PoligonosDao');
 const UsuariosController = require('./controllers/UsuariosControllers');
 const UsuariosDao = require('./lib/projeto/UsuariosDao');
+const PoligonosMysqlDao = require('./lib/projeto/PoligonosMysqlDao');
+const UsuariosMysqlDao = require('./lib/projeto/UsuariosMysqlDao');
+const mysql = require('mysql');
 
-let poligonosDao = new PoligonosDao();
-let usuariosDao = new UsuariosDao();
+const pool  = mysql.createPool({
+    connectionLimit : 10,
+    host            : 'bd',
+    user            : process.env.MARIADB_USER,
+    password        : process.env.MARIADB_PASSWORD,
+    database        : process.env.MARIADB_DATABASE
+});
+
+let poligonosDao = new PoligonosMysqlDao(pool);
+let usuariosDao = new UsuariosMysqlDao(pool);
 let poligonosController = new PoligonosController(poligonosDao);
 let estaticoController = new EstaticoController();
 let autorController = new AutorController();
@@ -28,7 +39,7 @@ const server = http.createServer((req, res) => {
     else if (url=='area') {
         poligonosController.area(req, res);
     }
-
+    
     else if (url == 'poligonos' && metodo == 'GET') {
         authController.autorizar(req, res, function() {
             poligonosController.listar(req, res);
