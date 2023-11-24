@@ -89,7 +89,7 @@ const server = http.createServer((req, res) => {
         authController.logar(req, res);
     }    
     else {
-        estaticoController.naoEncontrado(req, res);   
+        estaticoController.procurar(req, res);   
     }
 });
 

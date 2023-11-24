@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    
+    <style>
+        .padrao {
+            color: green;
+        }
+        .npadrao {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <%- include('/home/node/app/views/cabecalho.ejs') %>
+    <img src="../public/_img/logo.png">
     <h1>Vamos calcular a área de um decágono regular!</h1>
     <p>Determine a área de uma forma de decágono. Se a área estiver dentro do intervalo de 10 a 20 metros quadrados, é uma área média. Caso contrário, é uma área que não segue o padrão</p>
     <h2>Digite abaixo os dados:</h2>
-    <form action="area" method="post">
+    <form method="post" onSubmit="calcularArea(); event.preventDefault();">
         <label>
             <span>Nome</span>
             <input name="nome">
@@ -23,5 +33,34 @@
             <button>OK</button>
         </label>
     </form>
+    <script>
+    function calcularArea() {
+
+        let inputNome = document.querySelector('[name=nome]');
+        let nome = inputNome.value;
+        let inputLado = document.querySelector('[name=lado]');
+        let lado = parseFloat(inputLado.value);
+        const pi = Math.PI;
+        let area = (5/4) * Math.pow(lado,2) * (1/Math.tan(pi/10));
+        
+        let area_e_media = (area>=10 && area<=20);
+    
+        let divResposta = document.querySelector('#resposta');
+        let div = document.createElement('div');
+        div.textContent = 'Olá, ' + nome + '! Seu decágono tem ' + lado + ' . metros de lado. A  área dele é ' + area + ' metros quadrados.';
+    
+        if (area_e_media) {
+            div.classList.add('padrao');
+            div.classList.remove('npadrao');
+        }
+        else {
+            div.classList.remove('padrao');
+            div.classList.add('npadrao');
+        }
+    
+        divResposta.append(div);
+    }
+    </script>
+    <div id="resposta"></div>
 </body>
 </html>
