@@ -12,8 +12,8 @@ class PoligonosMysqlDao {
                     return reject('Erro: ' + error.message);
                 }
                 let poligonos = linhas.map(linha => {
-                    let { nome, lado } = linha;
-                    return new Poligono(nome, lado);
+                    let { id, nome, lado } = linha;
+                    return new Poligono(nome, lado, id);
                 })
                 resolve(poligonos);
             });

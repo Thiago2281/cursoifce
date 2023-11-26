@@ -41,25 +41,20 @@ const server = http.createServer((req, res) => {
     }
     
     else if (url == 'poligonos' && metodo == 'GET') {
-        authController.autorizar(req, res, function() {
-            poligonosController.listar(req, res);
-        }, ['admin', 'geral']);
+        poligonosController.listar(req, res);
     }
+
     else if (url == 'poligonos' && metodo == 'POST') {
-        authController.autorizar(req, res, function() {
-            poligonosController.inserir(req, res);
-        }, ['admin', 'geral']);
+        poligonosController.inserir(req, res);
     }
+    
     else if (url == 'poligonos' && metodo == 'PUT') {
-        authController.autorizar(req, res, function() {
-            poligonosController.alterar(req, res);
-        }, ['admin', 'geral']);
+        poligonosController.alterar(req, res);
     }
+    
     else if (url == 'poligonos' && metodo == 'DELETE') {
-        authController.autorizar(req, res, function() {
-            poligonosController.apagar(req, res);
-        }, ['admin']);
-    }
+        poligonosController.apagar(req, res);
+        }
 
     else if (url == 'usuarios' && metodo == 'GET') {
         usuariosController.listar(req, res);
