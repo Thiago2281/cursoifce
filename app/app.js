@@ -1,12 +1,12 @@
 const http = require('http');
-const PoligonosController = require('./controllers/PoligonosControllers');
+const FrasesController = require('./controllers/FrasesControllers');
 const EstaticoController = require('./controllers/EstaticoController');
 const AutorController = require('./controllers/AutorController');
 const AuthController = require('./controllers/AuthController');
-const PoligonosDao = require('./lib/projeto/PoligonosDao');
+
 const UsuariosController = require('./controllers/UsuariosControllers');
-const UsuariosDao = require('./lib/projeto/UsuariosDao');
-const PoligonosMysqlDao = require('./lib/projeto/PoligonosMysqlDao');
+
+const FrasesMysqlDao = require('./lib/projeto/FrasesMysqlDao');
 const UsuariosMysqlDao = require('./lib/projeto/UsuariosMysqlDao');
 const mysql = require('mysql');
 
@@ -18,9 +18,9 @@ const pool  = mysql.createPool({
     database        : process.env.MARIADB_DATABASE
 });
 
-let poligonosDao = new PoligonosMysqlDao(pool);
+let frasesDao = new FrasesMysqlDao(pool);
 let usuariosDao = new UsuariosMysqlDao(pool);
-let poligonosController = new PoligonosController(poligonosDao);
+let frasesController = new FrasesController(frasesDao);
 let estaticoController = new EstaticoController();
 let autorController = new AutorController();
 let authController = new AuthController(usuariosDao);
@@ -28,33 +28,39 @@ let usuariosController = new UsuariosController(usuariosDao);
 
 const PORT = 3000;
 const server = http.createServer((req, res) => {
+    req.charset = 'utf-8';
+    res.charset = 'utf-8';
     let [url, querystring] = req.url.split('?');
     let urlList = url.split('/');
     url = urlList[1];
     let metodo = req.method;
 
     if (url=='index') {
-        poligonosController.index(req, res);
-    }
-    else if (url=='area') {
-        poligonosController.area(req, res);
-    }
-    
-    else if (url == 'poligonos' && metodo == 'GET') {
-        poligonosController.listar(req, res);
+        frasesController.index(req, res);
     }
 
-    else if (url == 'poligonos' && metodo == 'POST') {
-        poligonosController.inserir(req, res);
+    else if (url == 'frases' && metodo == 'GET') {
+        frasesController.listar(req, res);
+    }
+
+    else if (url == 'pagina' && metodo == 'GET') {
+        frasesController.pagina(req, res);
+    }
+    else if (url == 'frases' && metodo == 'POST') {
+        frasesController.inserir(req, res);
     }
     
-    else if (url == 'poligonos' && metodo == 'PUT') {
-        poligonosController.alterar(req, res);
+    else if (url == 'frases' && metodo == 'PUT') {
+        frasesController.alterar(req, res);
     }
     
-    else if (url == 'poligonos' && metodo == 'DELETE') {
-        poligonosController.apagar(req, res);
+    else if (url == 'frases' && metodo == 'DELETE') {
+        frasesController.apagar(req, res);
         }
+
+    else if (url == 'frase' && metodo == 'GET') {
+        frasesController.ver(req, res);
+        }    
 
     else if (url == 'usuarios' && metodo == 'GET') {
         usuariosController.listar(req, res);
@@ -75,6 +81,22 @@ const server = http.createServer((req, res) => {
 
     else if (url=='autor') {
         autorController.autor(req, res);    
+    }
+
+    else if (url=='carreira') {
+        estaticoController.carreira(req, res);    
+    }
+
+    else if (url=='contate') {
+        estaticoController.contate(req, res);    
+    }
+
+    else if (url=='cadastro') {
+        authController.cadastro(req, res);    
+    }
+        
+    else if (url=='admin') {
+        authController.admin(req, res);    
     }
 
     else if (url == 'login') {

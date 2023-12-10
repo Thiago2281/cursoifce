@@ -20,12 +20,10 @@ class UsuariosController {
     
     async inserir(req, res) {
         let usuario = await this.getUsuarioDaRequisicao(req);
+        console.log({usuario});
         try {
             usuario.id = await this.usuariosDao.inserir(usuario);
-            utils.renderizarJSON(res, {
-                usuario: {
-                    ...usuario
-                },
+            utils.renderizarJSON(res, {usuario, 
                 mensagem: 'mensagem_usuario_cadastrado'
             });
         } catch (e) {

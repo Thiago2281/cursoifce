@@ -7,13 +7,13 @@ class UsuariosMysqlDao {
     }
     listar() {
         return new Promise((resolve, reject) => {
-            this.pool.query('SELECT * FROM usuarios', function (error, linhas, fields) {
+            this.pool.query('SELECT usuarios.id, usuarios.nome, usuarios.senha, papeis.nome AS papel FROM usuarios JOIN papeis ON usuarios.id_papel = papeis.id;', function (error, linhas, fields) {
                 if (error) {
                     return reject('Erro: ' + error.message);
                 }
                 let usuarios = linhas.map(linha => {
-                    let { nome, senha, papel } = linha;
-                    return new Usuario(nome, senha, papel);
+                    let { id, nome, senha, papel } = linha;
+                    return new Usuario(nome, senha, papel, id);
                 })
                 resolve(usuarios);
             });
@@ -24,10 +24,9 @@ class UsuariosMysqlDao {
         this.validar(usuario);
         usuario.senha = bcrypt.hashSync(usuario.senha, 10);
         return new Promise((resolve, reject) => {
-            let sql = `INSERT INTO usuarios (nome, senha, id_papel) VALUES (?, ?, ?);
-            `;
+            let sql = `INSERT INTO usuarios (nome, senha, id_papel) VALUES (?, ?, ?);`;
             console.log({sql}, usuario);
-            this.pool.query(sql, [usuario.nome, usuario.senha, 1], function (error, resultado, fields) {
+            this.pool.query(sql, [usuario.nome, usuario.senha, usuario.papel], function (error, resultado, fields) {
                 if (error) {
                     return reject('Erro: ' + error.message);
                 }
@@ -76,17 +75,19 @@ class UsuariosMysqlDao {
     }
     autenticar(nome, senha) {
         return new Promise((resolve, reject) => {
-            console.log('autenticar')
+            console.log('autenticar');
+            console.log({senha});
             let sql = `SELECT usuarios.id, usuarios.nome, usuarios.senha, papeis.nome AS papel FROM usuarios JOIN papeis ON usuarios.id_papel = papeis.id WHERE usuarios.nome=?`;           
             this.pool.query(sql, [nome, senha], function (error, linhas, fields) {
                 if (error) {
                     return reject('Erro: ' + error.message);
                 }
+                console.log({linhas});
                 for (let linha of linhas) {
                     console.log('autenticar', senha, linha);
                     if (bcrypt.compareSync(senha, linha.senha)) {                        
-                        let { nome, senha, papel } = linha;
-                        return resolve(new Usuario(nome, senha, papel));
+
+                        return resolve(new Usuario(linha.nome, linha.senha, linha.papel));
                     }
                 }
                 return resolve(null);

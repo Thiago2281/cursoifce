@@ -16,8 +16,8 @@ const utils = {
         let texto = fs.readFileSync(arquivo, 'utf-8');
         let html = ejs.render(texto, dados);
 
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(html);
+        res.writeHead(200, {'Content-Type': 'text/html, charset=utf-8'});
+        res.write(html, "utf-8");
         res.end();
     },
     renderizarJSON: function (res, dados, status=200) {

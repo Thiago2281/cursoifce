@@ -11,6 +11,15 @@ class AuthController {
         utils.renderizarEjs(res, './views/login.ejs');
     }
 
+    admin(req, res) {
+        utils.renderizarEjs(res, './views/admin.ejs');
+    }
+
+    cadastro(req, res) {
+        utils.renderizarEjs(res, './views/cadastro.ejs');
+    }
+
+
     async logar(req, res) {
         let corpo = await utils.getCorpo(req);
         console.log({corpo});

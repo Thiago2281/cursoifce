@@ -3,9 +3,10 @@ const utils = require("../lib/utils")
 class AutorController {
     autor(req, res) {
         let autor = {
-            nome: 'Thiago',
+            nome: 'Thiago Cadore Vale',
             formacoes: [
-                'Ciências Militares'
+                'Ciências Militares',
+                'Estudante do curso de Informatica para internet'
             ]
         }
 

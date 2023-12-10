@@ -1,3 +1,6 @@
+const utils = require("../lib/utils");
+const jwt = require('jsonwebtoken');
+
 let fs = require('fs');
 let path = require('path');
 
@@ -28,6 +31,12 @@ class EstaticoController {
         res.write('</body>')
         res.end();
     }  
+    contate(req, res) {
+        utils.renderizarEjs(res, './views/contate.ejs');
+    }
+    carreira(req, res) {
+        utils.renderizarEjs(res, './views/carreira.ejs');
+    }
 }
 
 module.exports = EstaticoController;
